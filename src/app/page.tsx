@@ -60,6 +60,16 @@ export default function Home() {
           </div>
 
           <div className="bg-white/10 p-6 rounded-lg backdrop-blur-lg shadow-lg hover:shadow-xl transition-shadow flex flex-col h-full">
+            <h2 className="text-2xl font-semibold mb-4">Sleep Scales</h2>
+            <p className="mb-4">Take professional sleep assessment scales to understand your sleep patterns better.</p>
+            <div className="mt-auto">
+              <Link href="/scales" className="inline-block bg-purple-500 hover:bg-purple-600 text-white px-6 py-2 rounded-full transition-colors">
+                Take Assessment
+              </Link>
+            </div>
+          </div>
+
+          <div className="bg-white/10 p-6 rounded-lg backdrop-blur-lg shadow-lg hover:shadow-xl transition-shadow flex flex-col h-full">
             <h2 className="text-2xl font-semibold mb-4">AI Sleep Program</h2>
             <p className="mb-4">Get personalized sleep improvement recommendations based on your sleep data.</p>
             <div className="mt-auto">
@@ -72,6 +82,16 @@ export default function Home() {
                 }`}
               >
                 {hasEnoughEntries ? 'Generate Program' : 'Need 3+ Sleep Tracker Entries'}
+              </Link>
+            </div>
+          </div>
+
+          <div className="bg-white/10 p-6 rounded-lg backdrop-blur-lg shadow-lg hover:shadow-xl transition-shadow flex flex-col h-full">
+            <h2 className="text-2xl font-semibold mb-4">Education Hub</h2>
+            <p className="mb-4">Explore articles, videos, and infographics about sleep science, hygiene, and more.</p>
+            <div className="mt-auto">
+              <Link href="/education" className="inline-block bg-purple-500 hover:bg-purple-600 text-white px-6 py-2 rounded-full transition-colors">
+                Explore Hub
               </Link>
             </div>
           </div>

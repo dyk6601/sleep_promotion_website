@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 
-const questions = [
+const sleepBasicsQuestions = [
   {
     id: 1,
     question: "How many hours of sleep does an average adult need per night?",
@@ -11,6 +11,33 @@ const questions = [
   },
   {
     id: 2,
+    question: "What is the ideal bedroom temperature for sleep?",
+    options: ["60-67°F (15-19°C)", "68-75°F (20-24°C)", "76-82°F (24-28°C)", "Above 82°F (28°C)"],
+    correct: 0
+  },
+  {
+    id: 3,
+    question: "What is the recommended duration for a power nap?",
+    options: ["10-20 minutes", "30-40 minutes", "1 hour", "2 hours"],
+    correct: 0
+  },
+  {
+    id: 4,
+    question: "What is the best position for sleep according to most sleep experts?",
+    options: ["On your back", "On your stomach", "On your side", "There is no single best position"],
+    correct: 3
+  },
+  {
+    id: 5,
+    question: "How long should you try to fall asleep before getting out of bed?",
+    options: ["5 minutes", "10 minutes", "20 minutes", "30 minutes"],
+    correct: 2
+  }
+];
+
+const sleepHygieneQuestions = [
+  {
+    id: 1,
     question: "Which of these is NOT good sleep hygiene practice?",
     options: [
       "Having a consistent sleep schedule",
@@ -21,19 +48,13 @@ const questions = [
     correct: 1
   },
   {
-    id: 3,
-    question: "What is the ideal bedroom temperature for sleep?",
-    options: ["60-67°F (15-19°C)", "68-75°F (20-24°C)", "76-82°F (24-28°C)", "Above 82°F (28°C)"],
-    correct: 0
-  },
-  {
-    id: 4,
+    id: 2,
     question: "What is the recommended time to stop consuming caffeine before bedtime?",
     options: ["1 hour before", "3 hours before", "6 hours before", "8 hours before"],
     correct: 2
   },
   {
-    id: 5,
+    id: 3,
     question: "Which of these activities is most beneficial for sleep?",
     options: [
       "Watching TV in bed",
@@ -44,13 +65,7 @@ const questions = [
     correct: 1
   },
   {
-    id: 6,
-    question: "What is the recommended duration for a power nap?",
-    options: ["10-20 minutes", "30-40 minutes", "1 hour", "2 hours"],
-    correct: 0
-  },
-  {
-    id: 7,
+    id: 4,
     question: "Which of these foods is most likely to help with sleep?",
     options: [
       "Spicy food",
@@ -61,24 +76,7 @@ const questions = [
     correct: 2
   },
   {
-    id: 8,
-    question: "What is the best position for sleep according to most sleep experts?",
-    options: [
-      "On your back",
-      "On your stomach",
-      "On your side",
-      "There is no single best position"
-    ],
-    correct: 3
-  },
-  {
-    id: 9,
-    question: "How long should you try to fall asleep before getting out of bed?",
-    options: ["5 minutes", "10 minutes", "20 minutes", "30 minutes"],
-    correct: 2
-  },
-  {
-    id: 10,
+    id: 5,
     question: "Which of these is a sign of good sleep quality?",
     options: [
       "Falling asleep immediately when you go to bed",
@@ -87,6 +85,127 @@ const questions = [
       "Having vivid dreams every night"
     ],
     correct: 2
+  },
+  {
+    id: 6,
+    question: "How does alcohol typically affect sleep?",
+    options: [
+      "Improves deep sleep throughout the night",
+      "Helps you stay asleep all night",
+      "Disrupts sleep cycles and reduces sleep quality",
+      "Has no effect on sleep"
+    ],
+    correct: 2
+  },
+  {
+    id: 7,
+    question: "What is a common effect of marijuana (MJ) on sleep?",
+    options: [
+      "Increases REM sleep",
+      "Reduces REM sleep and may affect sleep quality",
+      "No effect on sleep",
+      "Always improves sleep quality"
+    ],
+    correct: 1
+  },
+  {
+    id: 8,
+    question: "How does tobacco/nicotine use affect sleep?",
+    options: [
+      "Improves sleep onset",
+      "No effect on sleep",
+      "Can cause insomnia and disrupt sleep",
+      "Always helps you sleep longer"
+    ],
+    correct: 2
+  },
+  {
+    id: 9,
+    question: "What is melatonin most effective for?",
+    options: [
+      "Helping you stay asleep all night",
+      "Adjusting your sleep timing (chronotype) and sleep onset",
+      "Increasing deep sleep",
+      "Preventing nightmares"
+    ],
+    correct: 1
+  },
+  {
+    id: 10,
+    question: "Which of the following is a benefit of napping?",
+    options: [
+      "Improved alertness and performance",
+      "Worse memory",
+      "Increased insomnia",
+      "None of the above"
+    ],
+    correct: 0
+  },
+  {
+    id: 11,
+    question: "What is the best time of day for a nap to avoid interfering with nighttime sleep?",
+    options: [
+      "Early afternoon",
+      "Late evening",
+      "Right before bed",
+      "Midnight"
+    ],
+    correct: 0
+  },
+  {
+    id: 12,
+    question: "What is strategic napping?",
+    options: [
+      "Napping for long periods whenever you feel tired",
+      "Taking short naps (10-20 minutes) to boost alertness without grogginess",
+      "Napping only at night",
+      "Napping after drinking alcohol"
+    ],
+    correct: 1
+  },
+  {
+    id: 13,
+    question: "Which bedtime snack is most likely to help with sleep?",
+    options: [
+      "A large spicy meal",
+      "A small snack with complex carbs and protein",
+      "Sugary candy",
+      "Energy drink"
+    ],
+    correct: 1
+  }
+];
+
+const sleepDisordersQuestions = [
+  {
+    id: 1,
+    question: "Which disorder is characterized by difficulty falling or staying asleep?",
+    options: ["Insomnia", "Sleep apnea", "Narcolepsy", "Restless legs syndrome"],
+    correct: 0
+  },
+  {
+    id: 2,
+    question: "Which disorder involves pauses in breathing during sleep?",
+    options: ["Insomnia", "Sleep apnea", "Narcolepsy", "Restless legs syndrome"],
+    correct: 1
+  },
+  {
+    id: 3,
+    question: "Which disorder is marked by sudden sleep attacks during the day?",
+    options: ["Insomnia", "Sleep apnea", "Narcolepsy", "Restless legs syndrome"],
+    correct: 2
+  },
+  {
+    id: 4,
+    question: "Which disorder is associated with uncomfortable sensations in the legs and an urge to move them?",
+    options: ["Insomnia", "Sleep apnea", "Narcolepsy", "Restless legs syndrome"],
+    correct: 3
+  },
+  {
+    id: 5,
+    question: "Which of the following is a common symptom of sleep apnea?",
+    options: ["Loud snoring", "Night sweats", "Sleepwalking", "Nightmares"],
+    correct: 0
   }
 ];
 
@@ -111,17 +230,17 @@ const quizSets: QuizSets = {
   quiz1: {
     title: "Sleep Basics",
     description: "Test your knowledge about fundamental sleep concepts",
-    questions: questions
+    questions: sleepBasicsQuestions
   },
   quiz2: {
     title: "Sleep Disorders",
     description: "Learn about common sleep disorders and their symptoms",
-    questions: questions
+    questions: sleepDisordersQuestions
   },
   quiz3: {
     title: "Sleep Hygiene",
     description: "Test your knowledge about good sleep practices",
-    questions: questions
+    questions: sleepHygieneQuestions
   }
 };
 
@@ -137,6 +256,11 @@ export default function Quiz() {
   const [isCelebrating, setIsCelebrating] = useState(false);
   const [highScores, setHighScores] = useState<Record<string, number>>({});
   const [isClient, setIsClient] = useState(false);
+  const [timer, setTimer] = useState(30);
+  const [streak, setStreak] = useState(0);
+  const [isAnimating, setIsAnimating] = useState(false);
+  const [perks, setPerks] = useState<string[]>([]);
+  const [availablePerks, setAvailablePerks] = useState<string[]>(['Speed Boost', 'Double Points', 'Extra Time']);
 
   useEffect(() => {
     setIsClient(true);
@@ -152,6 +276,22 @@ export default function Quiz() {
     }
   }, [highScores, isClient]);
 
+  useEffect(() => {
+    if (!showScore && selectedOption === null) {
+      const interval = setInterval(() => {
+        setTimer((prev) => (prev > 0 ? prev - 1 : 0));
+      }, 1000);
+      return () => clearInterval(interval);
+    }
+  }, [showScore, selectedOption]);
+
+  useEffect(() => {
+    if (isCelebrating) {
+      const timeout = setTimeout(() => setIsCelebrating(false), 2000);
+      return () => clearTimeout(timeout);
+    }
+  }, [isCelebrating]);
+
   const getFeedbackMessage = (score: number, total: number, points: number) => {
     const percentage = (score / total) * 100;
     if (percentage >= 90) return `Sleep Master! 🌟 You've earned ${points} points! Keep shining!`;
@@ -160,21 +300,48 @@ export default function Quiz() {
     return `Sleep Adventurer! 🌙 You've earned ${points} points! Every step counts!`;
   };
 
+  const awardPerks = (currentStreak: number) => {
+    const newPerks: string[] = [];
+    if (currentStreak >= 3) newPerks.push('Speed Boost');
+    if (currentStreak >= 5) newPerks.push('Double Points');
+    if (currentStreak >= 7) newPerks.push('Extra Time');
+    setPerks(newPerks);
+  };
+
+  const usePerk = (perk: string) => {
+    setAvailablePerks(availablePerks.filter(p => p !== perk));
+    if (perk === 'Speed Boost') {
+      setTimer(timer + 10);
+    } else if (perk === 'Double Points') {
+      setPoints(points * 2);
+    } else if (perk === 'Extra Time') {
+      setTimer(timer + 20);
+    }
+  };
+
   const handleAnswerClick = (selectedOption: number) => {
     setSelectedOption(selectedOption);
     const correct = selectedOption === quizSets[currentQuiz].questions[currentQuestion].correct;
     setIsCorrect(correct);
     setShowFeedback(true);
+    setIsAnimating(true);
 
     if (correct) {
       setScore(score + 1);
       setPoints(points + 100);
+      setStreak(streak + 1);
+      awardPerks(streak + 1);
+    } else {
+      setStreak(0);
+      setPerks([]);
     }
 
     setTimeout(() => {
       setShowFeedback(false);
       setSelectedOption(null);
       setIsCorrect(null);
+      setIsAnimating(false);
+      setTimer(30);
 
       const nextQuestion = currentQuestion + 1;
       if (nextQuestion < quizSets[currentQuiz].questions.length) {
@@ -272,6 +439,23 @@ export default function Quiz() {
               <div className="text-sm">
                 Question {currentQuestion + 1} of {quizSets[currentQuiz].questions.length}
               </div>
+              <div className="text-sm">
+                Timer: {timer}s
+              </div>
+              <div className="text-sm">
+                Streak: {streak} 🔥
+              </div>
+            </div>
+            <div className="flex gap-4 justify-center mb-4">
+              {availablePerks.map((perk) => (
+                <button
+                  key={perk}
+                  onClick={() => usePerk(perk)}
+                  className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-full transition-colors transform hover:scale-105"
+                >
+                  Use {perk}
+                </button>
+              ))}
             </div>
             <div className="mb-8">
               <div className="w-full h-2 bg-white/20 rounded-full">
@@ -296,6 +480,7 @@ export default function Quiz() {
                       : 'bg-white/5 hover:bg-purple-500'
                     }
                     ${selectedOption !== null && selectedOption !== index ? 'opacity-50' : ''}
+                    ${isAnimating ? 'animate-pulse' : ''}
                   `}
                 >
                   {option}

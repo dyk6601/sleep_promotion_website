@@ -33,6 +33,12 @@ export default function RootLayout({
               <Link href="/tracker" className="hover:text-purple-300 transition-colors">
                 Tracker
               </Link>
+              <Link href="/scales" className="hover:text-purple-300 transition-colors">
+                Scales
+              </Link>
+              <Link href="/education" className="hover:text-purple-300 transition-colors">
+                Education
+              </Link>
             </div>
           </div>
         </nav>
