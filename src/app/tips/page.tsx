@@ -62,7 +62,7 @@ export default function Tips() {
         
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
           {tips.map((tip, index) => (
-            <div key={index} className="bg-white/10 p-6 rounded-lg backdrop-blur-lg transform hover:scale-105 transition-transform">
+            <div key={index} className="bg-white/10 p-6 rounded-lg backdrop-blur-lg transform hover:scale-105 transition-transform shadow-lg hover:shadow-xl">
               <div className="text-4xl mb-4">{tip.icon}</div>
               <h2 className="text-xl font-semibold mb-3">{tip.title}</h2>
               <p className="text-gray-200">{tip.description}</p>
@@ -70,7 +70,7 @@ export default function Tips() {
           ))}
         </div>
 
-        <div className="mt-12 bg-white/10 p-8 rounded-lg backdrop-blur-lg">
+        <div className="mt-12 bg-white/10 p-8 rounded-lg backdrop-blur-lg shadow-2xl">
           <h2 className="text-2xl font-semibold mb-4">Did You Know? 🤔</h2>
           <div className="space-y-6">
             {funFacts.map((fact, index) => (

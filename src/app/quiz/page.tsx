@@ -90,30 +90,85 @@ const questions = [
   }
 ];
 
+interface Question {
+  id: number;
+  question: string;
+  options: string[];
+  correct: number;
+}
+
+interface QuizSet {
+  title: string;
+  description: string;
+  questions: Question[];
+}
+
+type QuizSets = {
+  [key: string]: QuizSet;
+};
+
+const quizSets: QuizSets = {
+  quiz1: {
+    title: "Sleep Basics",
+    description: "Test your knowledge about fundamental sleep concepts",
+    questions: questions
+  },
+  quiz2: {
+    title: "Sleep Disorders",
+    description: "Learn about common sleep disorders and their symptoms",
+    questions: questions
+  },
+  quiz3: {
+    title: "Sleep Hygiene",
+    description: "Test your knowledge about good sleep practices",
+    questions: questions
+  }
+};
+
 export default function Quiz() {
+  const [currentQuiz, setCurrentQuiz] = useState<keyof QuizSets>('quiz1');
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [score, setScore] = useState(0);
+  const [points, setPoints] = useState(0);
   const [showScore, setShowScore] = useState(false);
   const [selectedOption, setSelectedOption] = useState<number | null>(null);
   const [isCorrect, setIsCorrect] = useState<boolean | null>(null);
   const [showFeedback, setShowFeedback] = useState(false);
+  const [isCelebrating, setIsCelebrating] = useState(false);
+  const [highScores, setHighScores] = useState<Record<string, number>>({});
+  const [isClient, setIsClient] = useState(false);
 
-  const getFeedbackMessage = (score: number, total: number) => {
+  useEffect(() => {
+    setIsClient(true);
+    const saved = localStorage.getItem('quizHighScores');
+    if (saved) {
+      setHighScores(JSON.parse(saved));
+    }
+  }, []);
+
+  useEffect(() => {
+    if (isClient) {
+      localStorage.setItem('quizHighScores', JSON.stringify(highScores));
+    }
+  }, [highScores, isClient]);
+
+  const getFeedbackMessage = (score: number, total: number, points: number) => {
     const percentage = (score / total) * 100;
-    if (percentage >= 90) return "Outstanding! You're a sleep expert! 🌟";
-    if (percentage >= 70) return "Great job! You know your sleep hygiene! 💪";
-    if (percentage >= 50) return "Good effort! Keep learning about sleep! 📚";
-    return "Keep studying! Sleep hygiene is important! 🌙";
+    if (percentage >= 90) return `Sleep Master! 🌟 You've earned ${points} points! Keep shining!`;
+    if (percentage >= 70) return `Sleep Champion! 💪 You've earned ${points} points! Amazing work!`;
+    if (percentage >= 50) return `Sleep Explorer! 📚 You've earned ${points} points! Keep learning!`;
+    return `Sleep Adventurer! 🌙 You've earned ${points} points! Every step counts!`;
   };
 
   const handleAnswerClick = (selectedOption: number) => {
     setSelectedOption(selectedOption);
-    const correct = selectedOption === questions[currentQuestion].correct;
+    const correct = selectedOption === quizSets[currentQuiz].questions[currentQuestion].correct;
     setIsCorrect(correct);
     setShowFeedback(true);
 
     if (correct) {
       setScore(score + 1);
+      setPoints(points + 100);
     }
 
     setTimeout(() => {
@@ -122,9 +177,20 @@ export default function Quiz() {
       setIsCorrect(null);
 
       const nextQuestion = currentQuestion + 1;
-      if (nextQuestion < questions.length) {
+      if (nextQuestion < quizSets[currentQuiz].questions.length) {
         setCurrentQuestion(nextQuestion);
       } else {
+        const percentage = (score + (correct ? 1 : 0)) / quizSets[currentQuiz].questions.length * 100;
+        if (percentage >= 70) {
+          setIsCelebrating(true);
+        }
+        const finalPoints = points + (correct ? 100 : 0);
+        if (!highScores[currentQuiz] || finalPoints > highScores[currentQuiz]) {
+          setHighScores(prev => ({
+            ...prev,
+            [currentQuiz]: finalPoints
+          }));
+        }
         setShowScore(true);
       }
     }, 1500);
@@ -133,43 +199,91 @@ export default function Quiz() {
   const handleRestart = () => {
     setCurrentQuestion(0);
     setScore(0);
+    setPoints(0);
     setShowScore(false);
     setSelectedOption(null);
     setIsCorrect(null);
     setShowFeedback(false);
+    setIsCelebrating(false);
+  };
+
+  const handleQuizChange = (quizId: string) => {
+    setCurrentQuiz(quizId as keyof QuizSets);
+    handleRestart();
   };
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-blue-900 to-purple-900 text-white py-12">
       <div className="container mx-auto px-4 max-w-2xl">
         {showScore ? (
-          <div className="bg-white/10 p-8 rounded-lg backdrop-blur-lg text-center animate-fade-in">
+          <div className={`bg-white/10 p-8 rounded-lg backdrop-blur-lg text-center animate-fade-in shadow-2xl ${isCelebrating ? 'animate-bounce' : ''}`}>
             <h2 className="text-3xl font-bold mb-4">Quiz Complete! 🎉</h2>
-            <p className="text-xl mb-6">You scored {score} out of {questions.length}</p>
-            <p className="text-lg mb-8 text-purple-300">{getFeedbackMessage(score, questions.length)}</p>
-            <button
-              onClick={handleRestart}
-              className="bg-purple-500 hover:bg-purple-600 text-white px-6 py-2 rounded-full transition-colors transform hover:scale-105"
-            >
-              Try Again
-            </button>
+            <p className="text-xl mb-2">You scored {score} out of {quizSets[currentQuiz].questions.length}</p>
+            <p className="text-2xl font-bold mb-6 text-yellow-400">Total Points: {points} ⭐</p>
+            {highScores[currentQuiz] && (
+              <p className="text-lg mb-4 text-purple-300">
+                High Score: {highScores[currentQuiz]} points
+              </p>
+            )}
+            <p className="text-lg mb-8 text-purple-300">{getFeedbackMessage(score, quizSets[currentQuiz].questions.length, points)}</p>
+            <div className="flex gap-4 justify-center">
+              <button
+                onClick={handleRestart}
+                className="bg-purple-500 hover:bg-purple-600 text-white px-6 py-2 rounded-full transition-colors transform hover:scale-105"
+              >
+                Take Another Shot! 🎯
+              </button>
+              <button
+                onClick={() => setShowScore(false)}
+                className="bg-blue-500 hover:bg-blue-600 text-white px-6 py-2 rounded-full transition-colors transform hover:scale-105"
+              >
+                Try Another Quiz! 🔄
+              </button>
+            </div>
           </div>
         ) : (
-          <div className="bg-white/10 p-8 rounded-lg backdrop-blur-lg">
+          <div className="bg-white/10 p-8 rounded-lg backdrop-blur-lg shadow-2xl">
             <div className="mb-8">
-              <div className="flex justify-between items-center mb-4">
-                <p className="text-sm">Question {currentQuestion + 1} of {questions.length}</p>
-                <div className="w-32 h-2 bg-white/20 rounded-full">
-                  <div 
-                    className="h-full bg-purple-500 rounded-full transition-all duration-300"
-                    style={{ width: `${((currentQuestion + 1) / questions.length) * 100}%` }}
-                  />
-                </div>
+              <h1 className="text-3xl font-bold mb-2">{quizSets[currentQuiz].title}</h1>
+              <p className="text-gray-300 mb-4">{quizSets[currentQuiz].description}</p>
+              <div className="flex gap-4 mb-6">
+                {Object.entries(quizSets).map(([id, quiz]) => (
+                  <button
+                    key={id}
+                    onClick={() => handleQuizChange(id)}
+                    className={`px-4 py-2 rounded-lg transition-all ${
+                      currentQuiz === id
+                        ? 'bg-purple-500 text-white'
+                        : 'bg-white/10 hover:bg-white/20'
+                    }`}
+                  >
+                    {quiz.title}
+                    {isClient && highScores[id] && (
+                      <span className="ml-2 text-yellow-400">⭐ {highScores[id]}</span>
+                    )}
+                  </button>
+                ))}
               </div>
-              <h2 className="text-2xl font-semibold">{questions[currentQuestion].question}</h2>
+            </div>
+            <div className="flex justify-between items-center mb-6">
+              <div className="text-xl font-bold text-yellow-400">
+                Points: {points} ⭐
+              </div>
+              <div className="text-sm">
+                Question {currentQuestion + 1} of {quizSets[currentQuiz].questions.length}
+              </div>
+            </div>
+            <div className="mb-8">
+              <div className="w-full h-2 bg-white/20 rounded-full">
+                <div 
+                  className="h-full bg-purple-500 rounded-full transition-all duration-300"
+                  style={{ width: `${((currentQuestion + 1) / quizSets[currentQuiz].questions.length) * 100}%` }}
+                />
+              </div>
+              <h2 className="text-2xl font-semibold mt-4">{quizSets[currentQuiz].questions[currentQuestion].question}</h2>
             </div>
             <div className="space-y-4">
-              {questions[currentQuestion].options.map((option, index) => (
+              {quizSets[currentQuiz].questions[currentQuestion].options.map((option, index) => (
                 <button
                   key={index}
                   onClick={() => handleAnswerClick(index)}
@@ -191,7 +305,9 @@ export default function Quiz() {
             {showFeedback && (
               <div className={`mt-4 text-center text-lg font-semibold animate-bounce
                 ${isCorrect ? 'text-green-400' : 'text-red-400'}`}>
-                {isCorrect ? 'Correct! 🎉' : 'Try again! 💪'}
+                {isCorrect 
+                  ? `Perfect! +100 points! 🌟` 
+                  : `Almost there! Keep going! 💪`}
               </div>
             )}
           </div>
