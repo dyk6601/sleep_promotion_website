@@ -1,5 +1,14 @@
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
+ Sleep Better, Live Better
+
+This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+
+## Project Overview
+
+**Sleep Better, Live Better** is an interactive website designed to spread awareness and provide information about healthy sleep habits. The site was developed by Derek Kim, Soohyeuk Choi, and Jefferson Le — students at NYU — as a project for While Your Sleeping Spring 25.
+
+
 ## Getting Started
 
 First, run the development server:
