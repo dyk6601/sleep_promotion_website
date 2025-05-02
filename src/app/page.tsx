@@ -25,7 +25,7 @@ export default function Home() {
           Sleep Better, Live Better
         </h1>
         <p className="text-xl text-center mb-12">
-          Learn the science of sleep and develop healthy sleep habits through interactive exercises
+          Learn the science of sleep and develop healthy sleep habits
         </p>
         
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mt-12">
@@ -61,7 +61,7 @@ export default function Home() {
 
           <div className="bg-white/10 p-6 rounded-lg backdrop-blur-lg shadow-lg hover:shadow-xl transition-shadow flex flex-col h-full">
             <h2 className="text-2xl font-semibold mb-4">Sleep Scales</h2>
-            <p className="mb-4">Take professional sleep assessment scales to understand your sleep patterns better.</p>
+            <p className="mb-4">Take sleep assessment scales to understand your sleep patterns better.</p>
             <div className="mt-auto">
               <Link href="/scales" className="inline-block bg-purple-500 hover:bg-purple-600 text-white px-6 py-2 rounded-full transition-colors">
                 Take Assessment
