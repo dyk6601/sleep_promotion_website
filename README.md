@@ -13,27 +13,27 @@ This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-
 - Instant feedback, scoring, and high score tracking
 - Fun animations and perks for correct answers
 
-### 📊 Sleep Assessment Scales
+### Sleep Assessment Scales
 - Take validated sleep rating scales: **Epworth Sleepiness Scale**, **Morningness-Eveningness Questionnaire (MEQ)**, and **RU-SATED**
 - Get personalized interpretations of your results
 - Progress bar and clear explanations for each scale
 
-### 🛏️ Sleep Tracker
+###  Sleep Tracker
 - Log your sleep and wake times, sleep quality, and notes
 - Visualize your sleep patterns and track your progress
 - Unlock achievements for consistent tracking
 
-### 📚 Educational Content Hub
+###  Educational Content Hub
 - Curated articles, videos, and infographics about sleep science, hygiene, and health
 - Dynamic search and category filtering
 - Direct links to reputable resources and research
 
-### 🏆 Achievements System
+###  Achievements System
 - Earn achievements for exploring features, completing quizzes, tracking sleep, and more
 - Unlockable badges with a celebratory modal popup
 - Achievements are saved locally for each user
 
-### 🤖 AI Sleep Program
+### AI Sleep Program
 - Generate a personalized 7-day sleep improvement plan based on your tracker and quiz data
 - Uses OpenAI to provide actionable, science-backed recommendations
 
