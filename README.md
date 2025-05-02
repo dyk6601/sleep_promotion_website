@@ -8,7 +8,7 @@ This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-
 
 ## Features
 
-### 📝 Sleep Quizzes
+### Sleep Quizzes
 - Three unique quizzes: **Sleep Basics**, **Sleep Hygiene**, and **Sleep Disorders**
 - Instant feedback, scoring, and high score tracking
 - Fun animations and perks for correct answers
